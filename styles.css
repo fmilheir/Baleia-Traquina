@@ -21,7 +21,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../Images/Boar_guard_in_action.png') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./Images/Boar_guard_in_action.png') no-repeat center center;
     background-size: cover;
     background-position: center 30%;
     height: 100vh;
@@ -159,7 +159,7 @@ body {
 
 /* How It Works Section */
 #how-it-works {
-    background: url('../Images/Device.jpg') no-repeat center center;
+    background: url('./Images/Device.jpg') no-repeat center center;
     background-size: cover;
     position: relative;
 }
