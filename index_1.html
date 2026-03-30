@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baleia Traquina — Automação & Eficiência</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ocean-deep: #0b1d3a;
+      --ocean-mid: #143059;
+      --ocean-light: #1e4d8c;
+      --sky: #f0f6ff;
+      --sand: #faf7f2;
+      --coral: #ff6b4a;
+      --coral-soft: #ff6b4a18;
+      --foam: #ffffff;
+      --sea-glass: #4ecdc4;
+      --text: #0b1d3a;
+      --text-soft: #5a6a82;
+      --font-display: 'Baloo 2', cursive;
+      --font-body: 'Nunito', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--sand);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: rgba(250,247,242,.85);
+      backdrop-filter: blur(16px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(11,29,58,.06);
+      transition: box-shadow .3s;
+    }
+    .navbar.scrolled { box-shadow: 0 4px 30px rgba(11,29,58,.06); }
+    .navbar-brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.55rem;
+      color: var(--ocean-deep) !important;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .brand-whale { width: 36px; height: 36px; }
+    .nav-link {
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--text-soft) !important;
+      font-size: .92rem;
+      padding: .5rem 1.1rem !important;
+      border-radius: 8px;
+      transition: all .2s;
+    }
+    .nav-link:hover { color: var(--coral) !important; background: var(--coral-soft); }
+    .btn-cta {
+      background: var(--coral);
+      color: #fff !important;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: .92rem;
+      padding: .55rem 1.6rem;
+      border: none;
+      border-radius: 50px;
+      transition: all .25s;
+      text-decoration: none;
+    }
+    .btn-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,107,74,.35);
+      color: #fff !important;
+    }
+    .navbar-toggler { border: none; }
+    .navbar-toggler:focus { box-shadow: none; }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%230b1d3a' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 0 80px;
+      background: linear-gradient(175deg, var(--sky) 0%, var(--sand) 60%);
+    }
+    .wave-container {
+      position: absolute;
+      bottom: -2px; left: 0; width: 100%;
+      line-height: 0;
+    }
+    .wave-container svg { width: 100%; height: auto; }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(78,205,196,.2), rgba(78,205,196,.05));
+      border: 1px solid rgba(78,205,196,.15);
+      animation: float 6s ease-in-out infinite;
+    }
+    .bubble:nth-child(1) { width: 60px; height: 60px; left: 8%; top: 25%; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 35px; height: 35px; left: 85%; top: 15%; animation-delay: 1.5s; }
+    .bubble:nth-child(3) { width: 80px; height: 80px; right: 12%; top: 55%; animation-delay: 3s; }
+    .bubble:nth-child(4) { width: 25px; height: 25px; left: 45%; top: 10%; animation-delay: 2s; }
+    .bubble:nth-child(5) { width: 45px; height: 45px; left: 70%; top: 70%; animation-delay: 4s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: .82rem;
+      color: var(--sea-glass);
+      background: rgba(78,205,196,.1);
+      border: 1px solid rgba(78,205,196,.25);
+      border-radius: 50px;
+      padding: .4rem 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+      line-height: 1.1;
+      color: var(--ocean-deep);
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 .wave-text {
+      color: var(--coral);
+      position: relative;
+    }
+    .hero h1 .wave-text::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; left: 0;
+      width: 100%; height: 8px;
+      background: var(--coral);
+      opacity: .2;
+      border-radius: 4px;
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-soft);
+      max-width: 480px;
+      margin-bottom: 2.2rem;
+      font-weight: 400;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .btn-hero-primary {
+      background: var(--coral);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: .85rem 2.4rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all .25s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-hero-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255,107,74,.3);
+      color: #fff;
+    }
+    .btn-hero-outline {
+      color: var(--ocean-deep);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: .85rem 2rem;
+      border: 2px solid var(--ocean-deep);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all .25s;
+      background: transparent;
+    }
+    .btn-hero-outline:hover {
+      background: var(--ocean-deep);
+      color: #fff;
+    }
+
+    /* ── WHALE SVG ── */
+    .hero-whale-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .whale-svg {
+      width: 100%;
+      max-width: 420px;
+      animation: whaleSwim 4s ease-in-out infinite;
+      filter: drop-shadow(0 20px 40px rgba(11,29,58,.12));
+    }
+    @keyframes whaleSwim {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-14px) rotate(1deg); }
+    }
+    .whale-splash {
+      position: absolute;
+      top: -10px; right: 25%;
+      font-size: 2.2rem;
+      animation: splash 3s ease-in-out infinite;
+    }
+    @keyframes splash {
+      0%, 100% { transform: translateY(0) scale(1); opacity: .7; }
+      50% { transform: translateY(-10px) scale(1.15); opacity: 1; }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 0; }
+    .section-label {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--sea-glass);
+      margin-bottom: .6rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+      color: var(--ocean-deep);
+      margin-bottom: .8rem;
+    }
+    .section-desc {
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      max-width: 520px;
+    }
+
+    /* ── SERVICES ── */
+    .services-section { background: var(--foam); }
+    .service-card {
+      background: var(--sand);
+      border: 1px solid rgba(11,29,58,.06);
+      border-radius: 20px;
+      padding: 2rem;
+      height: 100%;
+      transition: all .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(11,29,58,.08);
+      border-color: var(--coral);
+    }
+    .service-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .service-card h4 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--ocean-deep);
+      margin-bottom: .5rem;
+    }
+    .service-card p {
+      color: var(--text-soft);
+      font-size: .93rem;
+      margin: 0;
+    }
+
+    /* ── ABOUT ── */
+    .about-section { background: var(--sand); }
+    .stat-row {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .stat-item .stat-num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2.5rem;
+      color: var(--coral);
+      line-height: 1;
+    }
+    .stat-item .stat-label {
+      font-size: .85rem;
+      color: var(--text-soft);
+      font-weight: 600;
+    }
+    .values-list {
+      list-style: none;
+      padding: 0;
+    }
+    .values-list li {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(11,29,58,.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: .95rem;
+    }
+    .values-list li:last-child { border-bottom: none; }
+    .values-list .val-icon {
+      width: 38px; height: 38px;
+      min-width: 38px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--coral-soft);
+      color: var(--coral);
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+    .values-list strong {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--ocean-deep);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--ocean-deep);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(78,205,196,.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,107,74,.1) 0%, transparent 50%);
+    }
+    .cta-section .section-title { color: #fff; }
+    .cta-section p { color: rgba(255,255,255,.65); font-size: 1.1rem; margin-bottom: 2rem; }
+    .btn-cta-big {
+      background: var(--coral);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 1rem 2.8rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all .25s;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      position: relative;
+    }
+    .btn-cta-big:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 40px rgba(255,107,74,.4);
+      color: #fff;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #07142a;
+      color: rgba(255,255,255,.5);
+      padding: 3rem 0 1.5rem;
+      font-size: .88rem;
+    }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--coral); }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: #fff;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .footer-bottom {
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+    .social-links { display: flex; gap: .6rem; }
+    .social-links a {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      font-size: .9rem;
+      transition: all .25s;
+    }
+    .social-links a:hover {
+      border-color: var(--coral);
+      background: rgba(255,107,74,.15);
+      color: var(--coral);
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media(max-width:991px) {
+      .hero { min-height: auto; padding: 110px 0 60px; }
+      .hero-whale-wrap { margin-top: 3rem; }
+      .stat-row { gap: 1.5rem; }
+    }
+    @media(max-width:575px) {
+      .stat-row { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <svg class="brand-whale" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="48" cy="52" rx="35" ry="28" fill="#143059"/>
+        <ellipse cx="48" cy="52" rx="35" ry="28" fill="url(#wg)"/>
+        <ellipse cx="38" cy="58" rx="20" ry="13" fill="#1e4d8c" opacity=".3"/>
+        <circle cx="32" cy="46" r="4" fill="#fff"/>
+        <circle cx="33" cy="45.5" r="2" fill="#0b1d3a"/>
+        <ellipse cx="22" cy="52" rx="3" ry="1.5" fill="#ff6b4a" opacity=".5"/>
+        <path d="M80 44c4-8 12-16 18-14-2 6-8 14-16 18" fill="#143059"/>
+        <path d="M80 60c4 8 12 16 18 14-2-6-8-14-16-18" fill="#143059"/>
+        <path d="M45 30c-2-10 2-20 6-24 2 6 1 16-2 24" fill="#4ecdc4" opacity=".6"/>
+        <defs><radialGradient id="wg" cx="40%" cy="35%"><stop stop-color="#1e4d8c" stop-opacity=".4"/><stop offset="1" stop-color="#143059" stop-opacity="0"/></radialGradient></defs>
+      </svg>
+      Baleia Traquina
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto me-3 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#services">Serviços</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">Sobre Nós</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contacto</a></li>
+      </ul>
+      <a href="#contact" class="btn-cta">Fale Connosco</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+
+  <div class="container position-relative">
+    <div class="row align-items-center">
+      <div class="col-lg-6 fade-in">
+        <div class="hero-tag">🐋 IT Consulting · Automação · Eficiência</div>
+        <h1>Tornamos o seu negócio mais <span class="wave-text">rápido</span> e inteligente.</h1>
+        <p class="hero-sub">Somos a Baleia Traquina — uma consultora de IT que elimina processos manuais e transforma a forma como a sua empresa trabalha.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-hero-primary">Começar Agora <i class="bi bi-arrow-right"></i></a>
+          <a href="#services" class="btn-hero-outline">Ver Serviços</a>
+        </div>
+      </div>
+      <div class="col-lg-5 offset-lg-1 hero-whale-wrap fade-in">
+        <div class="whale-splash">💨</div>
+        <svg class="whale-svg" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="230" cy="210" rx="160" ry="110" fill="#143059"/>
+          <ellipse cx="230" cy="210" rx="160" ry="110" fill="url(#bodyGrad)"/>
+          <ellipse cx="200" cy="240" rx="100" ry="60" fill="#1e4d8c" opacity=".25"/>
+          <circle cx="130" cy="185" r="18" fill="#fff"/>
+          <circle cx="134" cy="183" r="10" fill="#0b1d3a"/>
+          <circle cx="137" cy="180" r="4" fill="#fff"/>
+          <ellipse cx="105" cy="210" rx="16" ry="9" fill="#ff6b4a" opacity=".3"/>
+          <path d="M110 220c10 12 35 15 50 5" stroke="#0b1d3a" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M385 175c20-40 55-75 85-65-8 25-35 55-70 72" fill="#143059"/>
+          <path d="M385 245c20 40 55 75 85 65-8-25-35-55-70-72" fill="#143059"/>
+          <path d="M220 105c-5-45 15-80 30-95 8 25 5 65-10 95" fill="#1e4d8c"/>
+          <g opacity=".6">
+            <ellipse cx="175" cy="65" rx="8" ry="12" fill="#4ecdc4">
+              <animate attributeName="ry" values="12;18;12" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".6;.3;.6" dur="2s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="195" cy="50" rx="6" ry="10" fill="#4ecdc4">
+              <animate attributeName="ry" values="10;16;10" dur="2.3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".5;.25;.5" dur="2.3s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="160" cy="55" rx="5" ry="9" fill="#4ecdc4">
+              <animate attributeName="ry" values="9;14;9" dur="1.8s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values=".5;.2;.5" dur="1.8s" repeatCount="indefinite"/>
+            </ellipse>
+          </g>
+          <ellipse cx="200" cy="280" rx="40" ry="15" fill="#1e4d8c" transform="rotate(-20 200 280)"/>
+          <circle cx="260" cy="180" r="6" fill="#1e4d8c" opacity=".15"/>
+          <circle cx="290" cy="220" r="8" fill="#1e4d8c" opacity=".12"/>
+          <circle cx="310" cy="190" r="5" fill="#1e4d8c" opacity=".1"/>
+          <defs>
+            <radialGradient id="bodyGrad" cx="35%" cy="30%">
+              <stop stop-color="#1e4d8c" stop-opacity=".35"/>
+              <stop offset="1" stop-color="#143059" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="wave-container">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100Z" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services-section" id="services">
+  <div class="container">
+    <div class="text-center mb-5 fade-in">
+      <div class="section-label">Serviços</div>
+      <h2 class="section-title">O que fazemos por si</h2>
+      <p class="section-desc mx-auto">Simplificamos, automatizamos e otimizamos — para que a sua equipa se foque no que realmente importa.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 fade-in">
+        <div class="service-card">
+          <span class="service-emoji">🔍</span>
+          <h4>Auditoria de Processos</h4>
+          <p>Analisamos os seus fluxos de trabalho para encontrar ineficiências e oportunidades de melhoria.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in">
+        <div class="service-card">
+          <span class="service-emoji">⚙️</span>
+          <h4>Automação</h4>
+          <p>Criamos soluções que eliminam tarefas repetitivas e reduzem erros humanos.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in">
+        <div class="service-card">
+          <span class="service-emoji">☁️</span>
+          <h4>Cloud & Infraestrutura</h4>
+          <p>Migramos e otimizamos a sua infraestrutura para mais performance e menos custos.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in">
+        <div class="service-card">
+          <span class="service-emoji">🔗</span>
+          <h4>Integração de Sistemas</h4>
+          <p>Ligamos as suas ferramentas e plataformas para que tudo funcione em harmonia.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in">
+        <div class="service-card">
+          <span class="service-emoji">🤖</span>
+          <h4>Inteligência Artificial</h4>
+          <p>Implementamos IA para decisões mais rápidas e insights automáticos.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in">
+        <div class="service-card">
+          <span class="service-emoji">📊</span>
+          <h4>Consultoria Contínua</h4>
+          <p>Acompanhamos a evolução do seu negócio com otimizações regulares.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 fade-in">
+        <div class="section-label">Sobre Nós</div>
+        <h2 class="section-title">Novos no mercado.<br>Prontos para agir.</h2>
+        <p class="section-desc">A Baleia Traquina nasceu com uma missão simples: ajudar empresas a trabalhar melhor, não mais. Sem métodos ultrapassados, sem burocracia — apenas soluções modernas que funcionam.</p>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Foco no resultado</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">0</div>
+            <div class="stat-label">Processos obsoletos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Motivação</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 offset-lg-1 fade-in mt-4 mt-lg-0">
+        <ul class="values-list">
+          <li>
+            <div class="val-icon"><i class="bi bi-lightning-fill"></i></div>
+            <div>
+              <strong>Abordagem Moderna</strong>
+              Usamos apenas ferramentas e metodologias atuais — nada de soluções do passado.
+            </div>
+          </li>
+          <li>
+            <div class="val-icon"><i class="bi bi-people-fill"></i></div>
+            <div>
+              <strong>Equipa Dedicada</strong>
+              Trabalha diretamente com os fundadores. Sem intermediários, sem ruído.
+            </div>
+          </li>
+          <li>
+            <div class="val-icon"><i class="bi bi-shield-check"></i></div>
+            <div>
+              <strong>Transparência Total</strong>
+              Relatórios semanais, dashboards partilhados, sem surpresas.
+            </div>
+          </li>
+          <li>
+            <div class="val-icon"><i class="bi bi-heart-fill"></i></div>
+            <div>
+              <strong>Paixão pelo Detalhe</strong>
+              Não entregamos "mais ou menos". Cada solução é pensada ao milímetro.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section" id="contact">
+  <div class="container position-relative fade-in">
+    <div class="section-label" style="color: var(--sea-glass);">Pronto para começar?</div>
+    <h2 class="section-title">Vamos descobrir o que<br>podemos automatizar juntos.</h2>
+    <p>Marque uma conversa gratuita de 30 minutos. Sem compromisso, sem pressão.</p>
+    <a href="mailto:ola@baleiatraquina.pt" class="btn-cta-big">
+      Marcar Conversa 🐋
+    </a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="row align-items-start g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand mb-2">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="48" cy="52" rx="35" ry="28" fill="#4ecdc4"/>
+            <circle cx="32" cy="46" r="4" fill="#fff"/>
+            <circle cx="33" cy="45.5" r="2" fill="#0b1d3a"/>
+            <path d="M80 44c4-8 12-16 18-14-2 6-8 14-16 18" fill="#4ecdc4"/>
+            <path d="M80 60c4 8 12 16 18 14-2-6-8-14-16-18" fill="#4ecdc4"/>
+          </svg>
+          Baleia Traquina
+        </div>
+        <p style="max-width:280px;">Consultoria IT focada em automação e eficiência para empresas que querem evoluir.</p>
+        <div class="social-links mt-3">
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-2">
+        <strong style="color:#fff; font-size:.85rem;">Navegação</strong>
+        <div class="mt-2">
+          <a href="#services">Serviços</a><br>
+          <a href="#about">Sobre Nós</a><br>
+          <a href="#contact">Contacto</a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <strong style="color:#fff; font-size:.85rem;">Serviços</strong>
+        <div class="mt-2">
+          <a href="#">Auditoria</a><br>
+          <a href="#">Automação</a><br>
+          <a href="#">Cloud</a><br>
+          <a href="#">IA</a>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <strong style="color:#fff; font-size:.85rem;">Contacto</strong>
+        <div class="mt-2">
+          <a href="mailto:ola@baleiatraquina.pt">ola@baleiatraquina.pt</a><br>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Baleia Traquina. Todos os direitos reservados.</span>
+      <span>Política de Privacidade · Termos</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Scroll animations
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Navbar shadow on scroll
+  window.addEventListener('scroll', () => {
+    document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
+</script>
+</body>
+</html>
